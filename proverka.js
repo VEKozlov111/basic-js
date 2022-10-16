@@ -1,19 +1,31 @@
-function deleteDigit(n) {
-    let str = String(n);
-    let arr = str.split('');
-    for (let i = 0; i < arr.length; i++) {
-        arr[i] = Number(arr[i])
+function getDNSStats(domains) {
+    if (domains.length == 0) {
+        return {}
+    }
+    let count1 = 0;
+    let count2 = 0;
+    let count3 = 0;
+    for (let i = 0; i < domains.length; i++) {
+        if (domains[i].includes('.com')) {
+            count1++
+        }
+        if (domains[i].includes('epam.')) {
+            count2++
+        }
+        if (domains[i].includes('info.')) {
+            count3++
+        }
     }
 
-    const m = Math.min.apply(null, arr);
-    var index = arr.indexOf(m);
-    if (index >= 0) {
-        arr.splice(index, 1);
+
+    let obj = {
+        ['.com']: count1,
+        ['.com.epam']: count2,
+        ['.com.epam.info']: count3
     }
-
-    let str2 = arr.join('');
-
-    let y = Number(str2);
-    return y
+    if (count3 == 0) {
+        delete obj['.com.epam.info']
+    }
+    return obj
 }
-console.log(deleteDigit('152'))  
+console.log(getDNSStats(['epam.com']))  
